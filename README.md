@@ -6,4 +6,4 @@ sudo docker run --gpus all --shm-size=1g  --ulimit memlock=-1 --ulimit stack=671
 
 After cloning the git repo, run the following command from within the container:
 
-python benchmarks/scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py --data_format=NCHW --batch_size=64 --model=resnet50 --variable_update=replicated --local_parameter_device=gpu --num_batches=100 --nodistortions
+python A-New-Hope/scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py --data_format=NCHW --batch_size=64 --model=resnet50 --variable_update=replicated --local_parameter_device=gpu --num_batches=100 --nodistortions
