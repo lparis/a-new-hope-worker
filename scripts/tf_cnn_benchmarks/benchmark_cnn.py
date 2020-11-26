@@ -2522,7 +2522,7 @@ class BenchmarkCNN(object):
       # TODO(laigd): rename 'images' to maybe 'inputs'.
       log_fn('total flowers processed per sec: %.2f' % images_per_sec)
       log_fn('-' * 64)
-      metricdata = {"node": dlnodename, "fpsvalue": 0}
+      metricdata = {"node": dlnodename, "fpsvalue": "-1"}
       r = requests.post(management_url, data=json.dumps(metricdata), headers=headers)
       r.status_code
     else:
