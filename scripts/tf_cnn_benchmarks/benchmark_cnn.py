@@ -38,7 +38,7 @@ import requests
 import json
 
 dlnodename = socket.gethostname()
-management_url = "http://10.0.1.143:5000/api/smokestate"
+management_url = "http://10.0.1.143:5000/api/metrics"
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
 #metricdata = {"key": "test","name": "dit is een test", "result":"false"}
