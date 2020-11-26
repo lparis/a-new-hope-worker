@@ -34,7 +34,18 @@ import traceback
 
 # flowers demo adjustment
 import socket
+import requests
+import json
+
 dlnodename = socket.gethostname()
+management_url = "http://10.0.1.143:5000/api/smokestate"
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+
+#metricdata = {"key": "test","name": "dit is een test", "result":"false"}
+#r = requests.post(url, data=json.dumps(data), headers=headers)
+#r.status_code
+
+
 
 
 from absl import flags as absl_flags
@@ -941,8 +952,16 @@ def benchmark_one_step(sess,
 def get_perf_timing_str(speed_mean, speed_uncertainty, speed_jitter, scale=1):
   if scale == 1:
     # TODO(laigd): rename 'images' to maybe 'inputs', same below.
+    metricdata = {"node": dlnodename, "fpsvalue": speed_mean}
+    r = requests.post(management_url, data=json.dumps(metricdata), headers=headers)
+    r.status_code
+
     return ('Leia processed %.1f flowers per second with +/- %.1f (jitter = %.1f) on node %s' %
-            (speed_mean, speed_uncertainty, speed_jitter, dlnodename))
+            (speed_mean, speed_uncertainty, speed_jitter, dlnodename)) 
+                
+
+
+
   else:
     return 'images/sec: %.1f' % speed_mean
 
