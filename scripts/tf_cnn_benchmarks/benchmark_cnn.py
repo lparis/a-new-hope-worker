@@ -2068,7 +2068,7 @@ class BenchmarkCNN(object):
         # Note that we compute the top 1 accuracy and top 5 accuracy for each
         # batch, which will have a slight performance impact.
         log_fn('-' * 64)
-        log_fn('total images/sec: %.2f' % images_per_sec)
+        log_fn('total flower images/sec: %.2f' % images_per_sec)
         log_fn('-' * 64)
       if self.benchmark_logger:
         eval_result = {
@@ -2520,8 +2520,11 @@ class BenchmarkCNN(object):
     if self.mode != constants.BenchmarkMode.TRAIN_AND_EVAL:
       log_fn('-' * 64)
       # TODO(laigd): rename 'images' to maybe 'inputs'.
-      log_fn('total images/sec: %.2f' % images_per_sec)
+      log_fn('total flowers processed per sec: %.2f' % images_per_sec)
       log_fn('-' * 64)
+      metricdata = {"node": dlnodename, "fpsvalue": 0}
+      r = requests.post(management_url, data=json.dumps(metricdata), headers=headers)
+      r.status_code
     else:
       log_fn('Done with training')
     num_steps_since_last_eval = local_step - last_eval_step
