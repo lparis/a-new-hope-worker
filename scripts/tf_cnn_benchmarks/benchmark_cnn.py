@@ -32,6 +32,11 @@ import threading
 import time
 import traceback
 
+# flowers demo adjustment
+import socket
+dlnodename = socket.gethostname()
+
+
 from absl import flags as absl_flags
 import numpy as np
 
@@ -936,8 +941,8 @@ def benchmark_one_step(sess,
 def get_perf_timing_str(speed_mean, speed_uncertainty, speed_jitter, scale=1):
   if scale == 1:
     # TODO(laigd): rename 'images' to maybe 'inputs', same below.
-    return ('images/sec: %.1f +/- %.1f (jitter = %.1f)' %
-            (speed_mean, speed_uncertainty, speed_jitter))
+    return ('Leia processed %.1f flowers per second with +/- %.1f (jitter = %.1f) on node %s' %
+            (speed_mean, speed_uncertainty, speed_jitter, dlnodename))
   else:
     return 'images/sec: %.1f' % speed_mean
 
