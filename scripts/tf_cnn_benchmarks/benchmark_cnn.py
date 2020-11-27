@@ -41,12 +41,6 @@ dlnodename = socket.gethostname()
 management_url = "http://10.0.1.143:5000/api/metrics"
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
-#metricdata = {"key": "test","name": "dit is een test", "result":"false"}
-#r = requests.post(url, data=json.dumps(data), headers=headers)
-#r.status_code
-
-
-
 
 from absl import flags as absl_flags
 import numpy as np
@@ -952,7 +946,7 @@ def benchmark_one_step(sess,
 def get_perf_timing_str(speed_mean, speed_uncertainty, speed_jitter, scale=1):
   if scale == 1:
     # TODO(laigd): rename 'images' to maybe 'inputs', same below.
-    metricdata = {"node": dlnodename, "fpsvalue": speed_mean}
+    metricdata = {"node": dlnodename, "fpsvalue": int(speed_mean)}
     r = requests.post(management_url, data=json.dumps(metricdata), headers=headers)
     r.status_code
 
@@ -2522,7 +2516,7 @@ class BenchmarkCNN(object):
       # TODO(laigd): rename 'images' to maybe 'inputs'.
       log_fn('total flowers processed per sec: %.2f' % images_per_sec)
       log_fn('-' * 64)
-      metricdata = {"node": dlnodename, "fpsvalue": "-1"}
+      metricdata = {"node": dlnodename, "fpsvalue": int("-1")}
       r = requests.post(management_url, data=json.dumps(metricdata), headers=headers)
       r.status_code
     else:
