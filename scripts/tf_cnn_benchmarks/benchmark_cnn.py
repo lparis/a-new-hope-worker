@@ -38,7 +38,8 @@ import requests
 import json
 
 dlnodename = socket.gethostname()
-management_url = "http://10.0.1.143:5000/api/metrics"
+dnsName = os.environ['DASHBOARD_FQDN']
+management_url = "http://" + dnsName + "/api/metrics"
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
 
