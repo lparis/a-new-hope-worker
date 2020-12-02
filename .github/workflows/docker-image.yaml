@@ -1,0 +1,21 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+          REPO=${{ secrets.REPO }}
+          VERSION=$(git log -1 --pretty=%h)
+          echo ${{ secrets.SECRET_KEY }} | docker login -u ${REPO} --password-stdin
+          docker build . -t ${REPO}/a-new-hope-worker:latest -t ${REPO}/a-new-hope-worker:${VERSION}
+          docker push ${REPO}/a-new-hope-worker
