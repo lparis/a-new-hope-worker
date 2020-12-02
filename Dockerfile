@@ -4,9 +4,24 @@
 #------------------------------------------------------------------------------------
 FROM nvcr.io/nvidia/tensorflow:20.01-tf1-py3
 #------------------------------------------------------------------------------------
-# Expose vars for dashboard POST URL and number of batches to run on the benchmark
+# Expose vars for dashboard POST URL
 ENV DASHBOARD_FQDN=""
-ENV BATCHES=""
+# File to run
+ENV FILE="./A-New-Hope/scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py"
+# Expose vars for TF params
+ENV BATCHES="200"
+ENV BATCH_SIZE="64"
+ENV DATA_FORMAT="NCHW"
+ENV NUM_WARMUPS="20"
+ENV MODEL_LIST="resnet50"
+ENV OTHER_PARAMS="--variable_update=replicated --local_parameter_device=gpu  --nodistortions"
+# Expose Bitfusion env vars
+# The number of shared GPUs to use
+ENV NUM_GPUS="1"
+# Proportion of GPU memory to be requested
+ENV PARTIAL_GPU="0.5"
+# e.g: --server_list 172.16.31.247:56001
+ENV BF_VARS=""
 #------------------------------------------------------------------------------------ 
 # Copy bitfusion files
 RUN mkdir -p /root/.bitfusion
@@ -39,4 +54,4 @@ RUN git clone https://github.com/vhojan/A-New-Hope.git
 #------------------------------------------------------------------------------------
 # End of Dockerfile
 #------------------------------------------------------------------------------------
-ENTRYPOINT [ "sh", "-c", "python A-New-Hope/scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py --data_format=NCHW --batch_size=64 --model=resnet50 --variable_update=replicated --local_parameter_device=gpu --num_batches=$BATCHES --nodistortions" ]
+ENTRYPOINT [ "sh", "-c", "bitfusion run -n $NUM_GPUS -p $PARTIAL_GPU $BF_VARS -- python $FILE --data_format=$DATA_FORMAT --batch_size=$BATCH_SIZE --model=$MODEL_LIST --num_batches=$BATCHES $OTHERPARAMS" ]
