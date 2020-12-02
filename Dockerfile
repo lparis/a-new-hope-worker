@@ -29,6 +29,7 @@ COPY ./bitfusion/client.yaml /root/.bitfusion/client.yaml
 COPY ./bitfusion/servers.conf /etc/bitfusion/servers.conf
 RUN mkdir -p /etc/bitfusion/tls
 COPY ./bitfusion/ca.crt /etc/bitfusion/tls/ca.crt 
+RUN chmod 600 /etc/bitfusion/tls/ca.crt && chmod 600 /root/.bitfusion/client.yaml
 #------------------------------------------------------------------------------------ 
 # Update package list
 # Install Bitfusion. Use deb file for Ubuntu18.04
