@@ -965,7 +965,7 @@ def get_perf_timing_str(speed_mean, speed_uncertainty, speed_jitter, scale=1):
 
     # Report SMI status to prometheus
     smi=nvsmi.get_gpus()
-    print(smi.gpu.gpu_name)
+    print(str(smi.gpu.gpu_name))
     #gpu_utilisation.set(smi.)
     #gpu_mem_used.set()
     #gpu_name.info()

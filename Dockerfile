@@ -43,7 +43,6 @@ RUN wget https://packages.vmware.com/bitfusion/ubuntu/18.04/bitfusion-client-ubu
     && apt-get update \
     && apt-get install -y ./bitfusion-client-ubuntu1804_2.5.0-10_amd64.deb \
     && apt-get install -y open-vm-tools \
-    && apt-get install --no-install-recommends -y nvidia-driver-418 \
     && rm -rf /var/lib/apt/lists/
 #------------------------------------------------------------------------------------ 
 # Needed to post results to dashboard
