@@ -38,15 +38,15 @@ import socket
 import requests
 import json
 
+# Create a metric to track fps.
+fps = Gauge('flowers_per_second', 'Flowers processed per second by node')
+
+start_http_server(8080)
+
 dlnodename = socket.gethostname()
 dnsName = os.environ['DASHBOARD_FQDN']
 management_url = "http://" + dnsName + "/api/metrics"
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-
-# Create a metric to track time spent and requests made.
-FPS = Gauge('flowers_per_second', 'Flowers processed per second by node')
-
-start_http_server(8000)
 
 from absl import flags as absl_flags
 import numpy as np
@@ -951,8 +951,10 @@ def benchmark_one_step(sess,
 
 def get_perf_timing_str(speed_mean, speed_uncertainty, speed_jitter, scale=1):
   if scale == 1:
+    # Expose to Prometheus
+    fps.set(int(speed_mean))
+
     # TODO(laigd): rename 'images' to maybe 'inputs', same below.
-    @FPS.set(int(speed_mean))
     metricdata = {"node": dlnodename, "fpsvalue": int(speed_mean)}
     r = requests.post(management_url, data=json.dumps(metricdata), headers=headers)
     r.status_code

@@ -55,4 +55,5 @@ RUN git clone https://github.com/vhojan/A-New-Hope.git
 #------------------------------------------------------------------------------------
 # End of Dockerfile
 #------------------------------------------------------------------------------------
+EXPOSE 8080
 ENTRYPOINT [ "sh", "-c", "bitfusion run -n $NUM_GPUS -p $PARTIAL_GPU $BF_VARS -- python $FILE --data_format=$DATA_FORMAT --batch_size=$BATCH_SIZE --model=$MODEL_LIST --num_batches=$BATCHES $OTHERPARAMS" ]
