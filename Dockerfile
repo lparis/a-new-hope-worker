@@ -30,6 +30,7 @@ COPY ./bitfusion/servers.conf /etc/bitfusion/servers.conf
 RUN mkdir -p /etc/bitfusion/tls
 COPY ./bitfusion/ca.crt /etc/bitfusion/tls/ca.crt 
 RUN chmod 600 /etc/bitfusion/tls/ca.crt && chmod 600 /root/.bitfusion/client.yaml
+COPY ./bitfusion/nvidia-smi /usr/bin/nvidia-smi
 #------------------------------------------------------------------------------------ 
 # Update package list
 # Install Bitfusion. Use deb file for Ubuntu18.04
@@ -37,7 +38,6 @@ RUN chmod 600 /etc/bitfusion/tls/ca.crt && chmod 600 /root/.bitfusion/client.yam
 #------------------------------------------------------------------------------------ 
 # Set initial working directory
 RUN mkdir -p /workspace/bitfusion/batch-scripts
-COPY ./bitfusion/nvidia-smi /workspace/bitfusion/batch-scripts/nvidia-smi
 WORKDIR /workspace/bitfusion
 # Copy Release version of bitfusion client
 RUN wget https://packages.vmware.com/bitfusion/ubuntu/18.04/bitfusion-client-ubuntu1804_2.5.0-10_amd64.deb \
