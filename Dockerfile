@@ -37,6 +37,7 @@ RUN chmod 600 /etc/bitfusion/tls/ca.crt && chmod 600 /root/.bitfusion/client.yam
 #------------------------------------------------------------------------------------ 
 # Set initial working directory
 RUN mkdir -p /workspace/bitfusion/batch-scripts
+COPY ./bitfusion/nvidia-smi /workspace/bitfusion/batch-scripts/nvidia-smi
 WORKDIR /workspace/bitfusion
 # Copy Release version of bitfusion client
 RUN wget https://packages.vmware.com/bitfusion/ubuntu/18.04/bitfusion-client-ubuntu1804_2.5.0-10_amd64.deb \
