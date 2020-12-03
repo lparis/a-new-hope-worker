@@ -47,7 +47,7 @@ RUN wget https://packages.vmware.com/bitfusion/ubuntu/18.04/bitfusion-client-ubu
 #------------------------------------------------------------------------------------ 
 # Needed to post results to dashboard
 #------------------------------------------------------------------------------------  
-RUN pip install requests prometheus_client
+RUN pip install requests prometheus_client nvsmi
 #------------------------------------------------------------------------------------
 # Clone benchmark repo
 #------------------------------------------------------------------------------------

@@ -23,7 +23,7 @@ from __future__ import print_function
 
 import argparse
 from collections import namedtuple
-from prometheus_client import start_http_server, Gauge
+from prometheus_client import start_http_server, Gauge, Info
 import contextlib
 import math
 import multiprocessing
@@ -37,9 +37,13 @@ import traceback
 import socket
 import requests
 import json
+import nvsmi
 
 # Create a metric to track fps.
 fps = Gauge('flowers_per_second', 'Flowers processed per second by node')
+gpu_mem_used = Gauge('gpu_mem_used', 'GPU memory utilisation')
+gpu_utilisation = Gauge('gpu_utilisation', 'GPU core utilisation')
+gpu_name = Info('gpu_name', 'Name of GPU')
 
 start_http_server(8080)
 
@@ -958,6 +962,13 @@ def get_perf_timing_str(speed_mean, speed_uncertainty, speed_jitter, scale=1):
     metricdata = {"node": dlnodename, "fpsvalue": int(speed_mean)}
     r = requests.post(management_url, data=json.dumps(metricdata), headers=headers)
     r.status_code
+
+    # Report SMI status to prometheus
+    smi=nvsmi.getgpus()
+    print(smi)
+    #gpu_utilisation.set(smi.)
+    #gpu_mem_used.set()
+    #gpu_name.info()
 
     return ('Leia processed %.1f flowers per second with +/- %.1f (jitter = %.1f) on node %s' %
             (speed_mean, speed_uncertainty, speed_jitter, dlnodename)) 
