@@ -30,7 +30,6 @@ COPY ./bitfusion/servers.conf /etc/bitfusion/servers.conf
 RUN mkdir -p /etc/bitfusion/tls
 COPY ./bitfusion/ca.crt /etc/bitfusion/tls/ca.crt 
 RUN chmod 600 /etc/bitfusion/tls/ca.crt && chmod 600 /root/.bitfusion/client.yaml
-COPY ./bitfusion/nvidia-smi /usr/bin/nvidia-smi
 #------------------------------------------------------------------------------------ 
 # Update package list
 # Install Bitfusion. Use deb file for Ubuntu18.04
@@ -44,6 +43,7 @@ RUN wget https://packages.vmware.com/bitfusion/ubuntu/18.04/bitfusion-client-ubu
     && apt-get update \
     && apt-get install -y ./bitfusion-client-ubuntu1804_2.5.0-10_amd64.deb \
     && apt-get install -y open-vm-tools \
+    && apt-get install --no-install-recommends -y nvidia-driver-418 \
     && rm -rf /var/lib/apt/lists/
 #------------------------------------------------------------------------------------ 
 # Needed to post results to dashboard
