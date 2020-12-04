@@ -1,4 +1,4 @@
-# TensorFlow "A new hope" Demo application
+# TensorFlow "A New Hope" demo worker application
 
 First, pull a version of the NGC container you would like to use. I have used the app with TensorFlow 1.15 and 20.01 build:
 
