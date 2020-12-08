@@ -1,5 +1,7 @@
 # TensorFlow "A New Hope" demo worker application
 
+![Docker Image CI](https://github.com/mylesagray/a-new-hope-worker/workflows/Docker%20Image%20CI/badge.svg)
+
 First, pull a version of the NGC container you would like to use. I have used the app with TensorFlow 1.15 and 20.01 build:
 
 sudo docker run --gpus all --shm-size=1g  --ulimit memlock=-1 --ulimit stack=67108864 -it -p 8888:8888 -v /home/[USER]/data/mnist:/data/mnist nvcr.io/nvidia/tensorflow:20.01-tf1-py3
