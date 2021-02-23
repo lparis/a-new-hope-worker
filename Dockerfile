@@ -4,10 +4,8 @@
 #------------------------------------------------------------------------------------
 FROM nvcr.io/nvidia/tensorflow:20.01-tf1-py3
 #------------------------------------------------------------------------------------
-# Expose vars for dashboard POST URL
-ENV DASHBOARD_FQDN=""
 # File to run
-ENV FILE="./A-New-Hope/scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py"
+ENV FILE="./a-new-hope-worker/scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py"
 # Expose vars for TF params
 ENV BATCHES="200"
 ENV BATCH_SIZE="64"
