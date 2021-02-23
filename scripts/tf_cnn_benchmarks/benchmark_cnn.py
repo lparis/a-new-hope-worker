@@ -943,6 +943,8 @@ def benchmark_one_step(sess,
 
 def get_perf_timing_str(speed_mean, speed_uncertainty, speed_jitter, scale=1):
   if scale == 1:
+    # TODO(laigd): rename 'images' to maybe 'inputs', same below.
+    
     # Expose to Prometheus
     fps.set(int(speed_mean))
 
@@ -954,7 +956,7 @@ def get_perf_timing_str(speed_mean, speed_uncertainty, speed_jitter, scale=1):
     #gpu_name.info()
 
     return ('images/sec: %.1f +/- %.1f (jitter = %.1f)' %
-            (speed_mean, speed_uncertainty, speed_jitter) 
+            (speed_mean, speed_uncertainty, speed_jitter)) 
   else:
     return 'images/sec: %.1f' % speed_mean
 
@@ -2513,7 +2515,7 @@ class BenchmarkCNN(object):
     if self.mode != constants.BenchmarkMode.TRAIN_AND_EVAL:
       log_fn('-' * 64)
       # TODO(laigd): rename 'images' to maybe 'inputs'.
-      log_fn('total per sec: %.2f' % images_per_sec)
+      log_fn('total images/sec: %.2f' % images_per_sec)
       log_fn('-' * 64)
     else:
       log_fn('Done with training')
