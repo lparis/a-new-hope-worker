@@ -33,24 +33,12 @@ import threading
 import time
 import traceback
 
-# flowers demo adjustment
-import socket
-import requests
-import json
-import nvsmi
-
 # Create a metric to track fps.
 fps = Gauge('flowers_per_second', 'Flowers processed per second by node')
 gpu_mem_used = Gauge('gpu_mem_used', 'GPU memory utilisation')
 gpu_utilisation = Gauge('gpu_utilisation', 'GPU core utilisation')
 gpu_name = Info('gpu_name', 'Name of GPU')
-
 start_http_server(8080)
-
-dlnodename = socket.gethostname()
-dnsName = os.environ['DASHBOARD_FQDN']
-management_url = "http://" + dnsName + "/api/metrics"
-headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
 from absl import flags as absl_flags
 import numpy as np
@@ -958,11 +946,6 @@ def get_perf_timing_str(speed_mean, speed_uncertainty, speed_jitter, scale=1):
     # Expose to Prometheus
     fps.set(int(speed_mean))
 
-    # TODO(laigd): rename 'images' to maybe 'inputs', same below.
-    metricdata = {"node": dlnodename, "fpsvalue": int(speed_mean)}
-    r = requests.post(management_url, data=json.dumps(metricdata), headers=headers)
-    r.status_code
-
     # Report SMI status to prometheus
     #smi=nvsmi.get_gpus()
     #print(str(smi.gpu.gpu_name))
@@ -970,12 +953,8 @@ def get_perf_timing_str(speed_mean, speed_uncertainty, speed_jitter, scale=1):
     #gpu_mem_used.set()
     #gpu_name.info()
 
-    return ('Leia processed %.1f flowers per second with +/- %.1f (jitter = %.1f) on node %s' %
-            (speed_mean, speed_uncertainty, speed_jitter, dlnodename)) 
-                
-
-
-
+    return ('images/sec: %.1f +/- %.1f (jitter = %.1f)' %
+            (speed_mean, speed_uncertainty, speed_jitter) 
   else:
     return 'images/sec: %.1f' % speed_mean
 
@@ -2082,7 +2061,7 @@ class BenchmarkCNN(object):
         # Note that we compute the top 1 accuracy and top 5 accuracy for each
         # batch, which will have a slight performance impact.
         log_fn('-' * 64)
-        log_fn('total flower images/sec: %.2f' % images_per_sec)
+        log_fn('total images/sec: %.2f' % images_per_sec)
         log_fn('-' * 64)
       if self.benchmark_logger:
         eval_result = {
@@ -2534,11 +2513,8 @@ class BenchmarkCNN(object):
     if self.mode != constants.BenchmarkMode.TRAIN_AND_EVAL:
       log_fn('-' * 64)
       # TODO(laigd): rename 'images' to maybe 'inputs'.
-      log_fn('total flowers processed per sec: %.2f' % images_per_sec)
+      log_fn('total per sec: %.2f' % images_per_sec)
       log_fn('-' * 64)
-      metricdata = {"node": dlnodename, "fpsvalue": int("-1")}
-      r = requests.post(management_url, data=json.dumps(metricdata), headers=headers)
-      r.status_code
     else:
       log_fn('Done with training')
     num_steps_since_last_eval = local_step - last_eval_step

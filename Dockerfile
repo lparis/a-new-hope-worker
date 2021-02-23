@@ -51,7 +51,7 @@ RUN pip install requests prometheus_client nvsmi
 #------------------------------------------------------------------------------------
 # Clone benchmark repo
 #------------------------------------------------------------------------------------
-RUN git clone https://github.com/vhojan/A-New-Hope.git
+RUN git clone https://github.com/mylesagray/a-new-hope-worker.git
 #------------------------------------------------------------------------------------
 # End of Dockerfile
 #------------------------------------------------------------------------------------
